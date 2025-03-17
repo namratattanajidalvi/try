@@ -4,7 +4,7 @@ const modal = document.querySelector('.modal-container');
 
 
 turnIndicator.textContent = "Current turn: White";
-turnIndicator.style.color = 'white';
+turnIndicator.style.color = "black";
 turnIndicator.style.textAlign = 'center';
 document.body.appendChild(turnIndicator);
 
