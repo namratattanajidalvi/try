@@ -7,7 +7,24 @@
 </head>
 
 <body class="background">
-    <h1 class="title">Chess</h1>
+    <div class="container">
+        <h1>Chess Game</h1>
+
+        <div id="player-input">
+            <label for="player1">Enter name of Player 1 (White):</label>
+            <input type="text" id="player1" placeholder="Player 1">
+            
+            <label for="player2">Enter name of Player 2 (Black):</label>
+            <input type="text" id="player2" placeholder="Player 2">
+            
+            <button id="start-game">Start Game</button>
+        </div>
+
+        <div id="game-info" style="display: none;">
+            <h2 id="current-turn"></h2>
+            <!-- <button id="next-turn">Next Turn</button> -->
+        </div>
+    </div>
     
 
     <div class="modal-container">

@@ -471,3 +471,36 @@ function undo() {
         turnIndicator.textContent = `Current turn: ${currentPlayer}`;
     }
 }
+
+document.getElementById('start-game').addEventListener('click', function() {
+    // Get player names
+    const player1 = document.getElementById('player1').value;
+    const player2 = document.getElementById('player2').value;
+
+    // Ensure both names are entered
+    if (player1 === '' || player2 === '') {
+        alert('Please enter names for both players.');
+        return;
+    }
+
+    // Hide the player input section
+    document.getElementById('player-input').style.display = 'none';
+
+    // Show the game information section
+    document.getElementById('game-info').style.display = 'block';
+
+    // Set initial turn to Player 1
+    // let currentPlayer = player1;
+    // updateTurn(currentPlayer);
+
+    // // Add event listener for 'Next Turn' button
+    // document.getElementById('next-turn').addEventListener('click', function() {
+    //     // Toggle between player 1 and player 2
+    //     currentPlayer = currentPlayer === player1 ? player2 : player1;
+    //     updateTurn(currentPlayer);
+    // });
+
+    function updateTurn(player) {
+        document.getElementById('current-turn').textContent = `It's ${player}'s turn!`;
+    }
+});
