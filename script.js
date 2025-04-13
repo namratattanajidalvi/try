@@ -504,3 +504,12 @@ document.getElementById('start-game').addEventListener('click', function() {
         document.getElementById('current-turn').textContent = `It's ${player}'s turn!`;
     }
 });
+function highlightMoves(possibleMoves) {
+    clearHighlights();
+    possibleMoves.forEach(squareId => {
+        const square = document.getElementById(squareId);
+        if (square) {
+            square.classList.add("possible-move");
+        }
+    });
+}
