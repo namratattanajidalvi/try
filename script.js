@@ -504,12 +504,73 @@ document.getElementById('start-game').addEventListener('click', function() {
         document.getElementById('current-turn').textContent = `It's ${player}'s turn!`;
     }
 });
-function highlightMoves(possibleMoves) {
-    clearHighlights();
-    possibleMoves.forEach(squareId => {
-        const square = document.getElementById(squareId);
-        if (square) {
-            square.classList.add("possible-move");
-        }
-    });
+// Function to show possible moves for a selected piece
+function showPossibleMoves(squareId, piece) {
+    clearHighlights(); // Clear previous highlights
+
+    const possibleMoves = getPossibleMoves(squareId, piece);
+    
+    possibleMoves.forEach(move => {
+        const square = document.getElementById(move);
+        if (square) {
+            square.classList.add('highlight'); // Add a highlight class for styling
+        }
+    });
 }
+
+// Function to get possible moves based on the piece type
+function getPossibleMoves(squareId, piece) {
+    const moves = [];
+    const [file, rank] = [squareId[0], parseInt(squareId[1])];
+
+    switch (piece) {
+        case 'P': // Pawn
+            // Assuming white pawns move up the board
+            if (rank < 8) moves.push(`${file}${rank + 1}`); // Move forward
+            if (rank === 2) moves.push(`${file}${rank + 2}`); // Double move from starting position
+            break;
+        // Add cases for other pieces (Rook, Knight, Bishop, Queen, King)
+        // Example for Knight
+        case 'N': // Knight
+            const knightMoves = [
+                `${String.fromCharCode(file.charCodeAt(0) + 1)}${rank + 2}`,
+                `${String.fromCharCode(file.charCodeAt(0) + 1)}${rank - 2}`,
+                `${String.fromCharCode(file.charCodeAt(0) - 1)}${rank + 2}`,
+                `${String.fromCharCode(file.charCodeAt(0) - 1)}${rank - 2}`,
+                `${String.fromCharCode(file.charCodeAt(0) + 2)}${rank + 1}`,
+                `${String.fromCharCode(file.charCodeAt(0) + 2)}${rank - 1}`,
+                `${String.fromCharCode(file.charCodeAt(0) - 2)}${rank + 1}`,
+                `${String.fromCharCode(file.charCodeAt(0) - 2)}${rank - 1}`,
+            ];
+            moves.push(...knightMoves.filter(move => isValidMove(move)));
+            break;
+        // Add more cases for other pieces
+    }
+
+    return moves;
+}
+
+// Function to check if a move is valid (within the board limits)
+function isValidMove(move) {
+    const file = move[0];
+    const rank = parseInt(move[1]);
+    return file >= 'a' && file <= 'h' && rank >= 1 && rank <= 8;
+}
+
+// Function to clear highlights from the board
+function clearHighlights() {
+    const highlightedSquares = document.querySelectorAll('.highlight');
+    highlightedSquares.forEach(square => {
+        square.classList.remove('highlight');
+    });
+}
+
+// Example of how to call showPossibleMoves when a piece is clicked
+document.querySelectorAll('.square').forEach(square => {
+    square.addEventListener('click', () => {
+        const piece = square.innerText; // Assuming pieces are represented by text
+        if (piece) {
+            showPossibleMoves(square.id, piece);
+        }
+    });
+});
