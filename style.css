@@ -261,4 +261,7 @@ span {
         font-size: 16;
     }
 }
-    ok
+.highlight {
+    background-color: rgba(0, 255, 0, 0.3); /* green overlay */
+    }
+
