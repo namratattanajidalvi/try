@@ -504,60 +504,32 @@ document.getElementById('start-game').addEventListener('click', function() {
         document.getElementById('current-turn').textContent = `It's ${player}'s turn!`;
     }
 });
-// Function to show possible moves for a selected piece
-function showPossibleMoves(squareId, piece) {
-    clearHighlights(); // Clear previous highlights
+const chessboard = document.getElementById('chessboard');
 
-    const possibleMoves = getPossibleMoves(squareId, piece);
-    
+// Create the chessboard
+for (let i = 0; i < 8; i++) {
+    for (let j = 0; j < 8; j++) {
+        const square = document.createElement('div');
+        square.classList.add('square', (i + j) % 2 === 0 ? 'white' : 'black');
+        square.dataset.position = `${i}-${j}`;
+        square.addEventListener('click', () => showPossibleMoves(i, j));
+        chessboard.appendChild(square);
+    }
+}
+
+// Function to show possible moves (example for a knight)
+function showPossibleMoves(x, y) {
+    clearHighlights();
+    const possibleMoves = getKnightMoves(x, y);
     possibleMoves.forEach(move => {
-        const square = document.getElementById(move);
+        const square = document.querySelector(`[data-position="${move[0]}-${move[1]}"]`);
         if (square) {
-            square.classList.add('highlight'); // Add a highlight class for styling
+            square.classList.add('highlight');
         }
     });
 }
 
-// Function to get possible moves based on the piece type
-function getPossibleMoves(squareId, piece) {
-    const moves = [];
-    const [file, rank] = [squareId[0], parseInt(squareId[1])];
-
-    switch (piece) {
-        case 'P': // Pawn
-            // Assuming white pawns move up the board
-            if (rank < 8) moves.push(`${file}${rank + 1}`); // Move forward
-            if (rank === 2) moves.push(`${file}${rank + 2}`); // Double move from starting position
-            break;
-        // Add cases for other pieces (Rook, Knight, Bishop, Queen, King)
-        // Example for Knight
-        case 'N': // Knight
-            const knightMoves = [
-                `${String.fromCharCode(file.charCodeAt(0) + 1)}${rank + 2}`,
-                `${String.fromCharCode(file.charCodeAt(0) + 1)}${rank - 2}`,
-                `${String.fromCharCode(file.charCodeAt(0) - 1)}${rank + 2}`,
-                `${String.fromCharCode(file.charCodeAt(0) - 1)}${rank - 2}`,
-                `${String.fromCharCode(file.charCodeAt(0) + 2)}${rank + 1}`,
-                `${String.fromCharCode(file.charCodeAt(0) + 2)}${rank - 1}`,
-                `${String.fromCharCode(file.charCodeAt(0) - 2)}${rank + 1}`,
-                `${String.fromCharCode(file.charCodeAt(0) - 2)}${rank - 1}`,
-            ];
-            moves.push(...knightMoves.filter(move => isValidMove(move)));
-            break;
-        // Add more cases for other pieces
-    }
-
-    return moves;
-}
-
-// Function to check if a move is valid (within the board limits)
-function isValidMove(move) {
-    const file = move[0];
-    const rank = parseInt(move[1]);
-    return file >= 'a' && file <= 'h' && rank >= 1 && rank <= 8;
-}
-
-// Function to clear highlights from the board
+// Function to clear highlights
 function clearHighlights() {
     const highlightedSquares = document.querySelectorAll('.highlight');
     highlightedSquares.forEach(square => {
@@ -565,12 +537,13 @@ function clearHighlights() {
     });
 }
 
-// Example of how to call showPossibleMoves when a piece is clicked
-document.querySelectorAll('.square').forEach(square => {
-    square.addEventListener('click', () => {
-        const piece = square.innerText; // Assuming pieces are represented by text
-        if (piece) {
-            showPossibleMoves(square.id, piece);
-        }
-    });
-});
+// Function to get possible moves for a knight
+function getKnightMoves(x, y) {
+    const moves = [
+        [x + 2, y + 1], [x + 2, y - 1],
+        [x - 2, y + 1], [x - 2, y - 1],
+        [x + 1, y + 2], [x + 1, y - 2],
+        [x - 1, y + 2], [x - 1, y - 2]
+    ];
+    return moves.filter(move => move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8);
+}
