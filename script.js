@@ -504,35 +504,3 @@ document.getElementById('start-game').addEventListener('click', function() {
         document.getElementById('current-turn').textContent = `It's ${player}'s turn!`;
     }
 });
-
-
-// Function to show possible moves (example for a knight)
-function showPossibleMoves(x, y) {
-    clearHighlights();
-    const possibleMoves = getKnightMoves(x, y);
-    possibleMoves.forEach(move => {
-        const square = document.querySelector(`[data-position="${move[0]}-${move[1]}"]`);
-        if (square) {
-            square.classList.add('highlight');
-        }
-    });
-}
-
-// Function to clear highlights
-function clearHighlights() {
-    const highlightedSquares = document.querySelectorAll('.highlight');
-    highlightedSquares.forEach(square => {
-        square.classList.remove('highlight');
-    });
-}
-
-// Function to get possible moves for a knight
-function getKnightMoves(x, y) {
-    const moves = [
-        [x + 2, y + 1], [x + 2, y - 1],
-        [x - 2, y + 1], [x - 2, y - 1],
-        [x + 1, y + 2], [x + 1, y - 2],
-        [x - 1, y + 2], [x - 1, y - 2]
-    ];
-    return moves.filter(move => move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8);
-}
