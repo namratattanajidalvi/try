@@ -504,18 +504,7 @@ document.getElementById('start-game').addEventListener('click', function() {
         document.getElementById('current-turn').textContent = `It's ${player}'s turn!`;
     }
 });
-const chessboard = document.getElementById('chessboard');
 
-// Create the chessboard
-for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 8; j++) {
-        const square = document.createElement('div');
-        square.classList.add('square', (i + j) % 2 === 0 ? 'white' : 'black');
-        square.dataset.position = `${i}-${j}`;
-        square.addEventListener('click', () => showPossibleMoves(i, j));
-        chessboard.appendChild(square);
-    }
-}
 
 // Function to show possible moves (example for a knight)
 function showPossibleMoves(x, y) {
