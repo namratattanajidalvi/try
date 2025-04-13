@@ -1,6 +1,9 @@
 const chessBoard = document.getElementById("chessBoard");
 const turnIndicator = document.createElement("h4");
 const modal = document.querySelector('.modal-container');
+// Inside your renderBoard() or board creation logic
+cell.id = `cell-${i}-${j}`;
+cell.onclick = () => handleCellClick(i, j);
 
 
 turnIndicator.textContent = "Current turn: White";
@@ -27,9 +30,6 @@ class Piece {
 
 let board = [];
 for (let i = 0; i < 8; i++) {
-    // Inside your renderBoard() or board creation logic
-cell.id = `cell-${i}-${j}`;
-cell.onclick = () => handleCellClick(i, j);
 
     board[i] = [];
     for (let j = 0; j < 8; j++) {
