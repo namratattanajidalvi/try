@@ -27,6 +27,10 @@ class Piece {
 
 let board = [];
 for (let i = 0; i < 8; i++) {
+    // Inside your renderBoard() or board creation logic
+cell.id = `cell-${i}-${j}`;
+cell.onclick = () => handleCellClick(i, j);
+
     board[i] = [];
     for (let j = 0; j < 8; j++) {
         if (i === 1) board[i][j] = new Piece("Black", "\u265F", "pawn"); 
